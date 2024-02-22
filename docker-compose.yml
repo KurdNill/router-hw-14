@@ -1,0 +1,36 @@
+version: "3.8"
+
+volumes:
+  my_db_volume:
+    driver: local
+
+networks:
+  php_advanced:
+    driver: bridge
+
+services:
+  web:
+    environment:
+      - XDEBUG_SESSION=docker-server
+    build:
+      context: .docker/php
+    restart: always
+    volumes:
+      - .:/var/www/html
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    ports:
+      - "8081:80"
+    networks:
+      - php_advanced
+  mysql_db:
+    image: "mysql:8"
+    restart: always
+    volumes:
+      - "my_db_volume:/var/lib/mysql"
+    ports:
+      - "33061:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: php_advanced
+    networks:
+      - php_advanced

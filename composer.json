@@ -1,0 +1,13 @@
+{
+    "name": "root/html",
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "Controllers/",
+            "Core\\": "core/"
+        }
+    },
+    "require": {
+        "larapack/dd": "1.*",
+        "ext-pdo": "*"
+    }
+}
